@@ -1,0 +1,79 @@
+group = "com.pkm.flutter_android_oaid_plugin"
+version = "1.0-SNAPSHOT"
+
+buildscript {
+    ext.kotlin_version = "1.7.10"
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("com.android.tools.build:gradle:7.3.0")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+android {
+    if (project.android.hasProperty("namespace")) {
+        namespace = "com.pkm.flutter_android_oaid_plugin"
+    }
+
+    compileSdk = 34
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    sourceSets {
+        main.java.srcDirs += "src/main/kotlin"
+        test.java.srcDirs += "src/test/kotlin"
+    }
+
+    defaultConfig {
+        minSdk = 21
+    }
+
+    dependencies {
+        implementation('com.github.gzu-liyujiang:Android_CN_OAID:4.2.9') {
+            // 如果使用了移动安全联盟SDK，共存的话需排除掉本项目依赖的华为/荣耀官方广告标识服务SDK，因为移动安全联盟SDK也依赖了华为/荣耀的SDK
+            // 如果华为官方广告标识服务SDK下载失败或编译报错的话，可考虑在 build.gradle 中增加以下配置：
+            // repositories { maven { url 'https://developer.huawei.com/repo' } }
+            // runtimeOnly "com.huawei.hms:ads-identifier:3.4.62.300"
+            exclude group: 'com.huawei.hms', module: 'ads-identifier'
+            // 荣耀官方广告标识服务SDK同理：
+            // repositories { maven { url 'https://developer.hihonor.com/repo' } }
+            // runtimeOnly "com.hihonor.mcs:ads-identifier:1.0.2.301"
+            exclude group: 'com.hihonor.mcs', module: 'ads-identifier'
+        }
+        testImplementation("org.jetbrains.kotlin:kotlin-test")
+        testImplementation("org.mockito:mockito-core:5.0.0")
+    }
+
+    testOptions {
+        unitTests.all {
+            useJUnitPlatform()
+
+            testLogging {
+               events "passed", "skipped", "failed", "standardOut", "standardError"
+               outputs.upToDateWhen {false}
+               showStandardStreams = true
+            }
+        }
+    }
+}

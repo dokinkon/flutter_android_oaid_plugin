@@ -1,0 +1,4 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.pkm.flutter_android_oaid_plugin">
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+</manifest>

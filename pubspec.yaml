@@ -1,7 +1,7 @@
 name: flutter_android_oaid_plugin
-description: "A new Flutter plugin project."
-version: 0.0.1
-homepage:
+description: "A Flutter plugin project for getting OAID on Android."
+version: 0.0.2
+homepage: "https://github.com/dokinkon/flutter_android_oaid_plugin"
 
 environment:
   sdk: '>=3.4.1 <4.0.0'

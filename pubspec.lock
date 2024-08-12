@@ -236,7 +236,7 @@ packages:
     source: hosted
     version: "1.9.0"
   pigeon:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: pigeon
       sha256: c322a8dcb19cd632febb8d025a67daab3c2c0475b8b79885f5a6fcc7dc6ef884
